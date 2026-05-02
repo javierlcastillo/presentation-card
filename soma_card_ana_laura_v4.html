@@ -1,145 +1,123 @@
-
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
-.page { display:flex; flex-direction:column; align-items:center; gap:40px; padding:32px 16px; background:#f5f5f5; }
-.card-label { font-family:'Courier New',monospace; font-size:11px; color:#8B6914; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:10px; text-align:center; }
-.card-wrap { display:flex; flex-direction:column; align-items:center; }
-.card { width:660px; height:374px; border-radius:14px; position:relative; overflow:hidden; background:#ffffff; border:1px solid #e8e0d0; flex-shrink:0; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+body { background:#f5f5f5; display:flex; flex-direction:column; align-items:center; gap:40px; padding:32px 16px; font-family:-apple-system,'Helvetica Neue',Arial,sans-serif; }
+.label { font-family:'Courier New',monospace; font-size:11px; color:#8B6914; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:10px; text-align:center; }
+.card { width:660px; height:374px; border-radius:14px; position:relative; overflow:hidden; background:#ffffff; border:1px solid #e8e0d0; box-shadow:0 4px 24px rgba(0,0,0,0.08); }
 .sep { width:660px; height:1px; background:#e0d8c8; }
+.red-line { position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,#AC1F25,#c4373e 50%,#AC1F25); }
+.gold-line { position:absolute; top:3px; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,#B8960C88,transparent); }
+.left-accent { position:absolute; left:0; top:0; bottom:0; width:4px; background:linear-gradient(180deg,#AC1F25,#3C2415 50%,#3C2415); }
+.left-accent-gold { position:absolute; left:4px; top:0; bottom:0; width:1px; background:linear-gradient(180deg,transparent,#B8960C55 30%,#B8960C55 70%,transparent); }
 
-.red-line { position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg, #AC1F25 0%, #c4373e 50%, #AC1F25 100%); }
-.gold-line { position:absolute; top:3px; left:0; right:0; height:1px; background:linear-gradient(90deg, transparent, #B8960C88, transparent); }
-.left-accent { position:absolute; left:0; top:0; bottom:0; width:4px; background:linear-gradient(180deg, #AC1F25 0%, #3C2415 50%, #3C2415 100%); }
-.left-accent-gold { position:absolute; left:4px; top:0; bottom:0; width:1px; background:linear-gradient(180deg, transparent 0%, #B8960C55 30%, #B8960C55 70%, transparent 100%); }
-
+/* FRONT */
 .front-inner { position:absolute; inset:0; padding:40px 52px 40px 60px; display:flex; flex-direction:column; justify-content:flex-end; gap:18px; }
-
-/* Logo as background watermark */
-.logo-bg { position:absolute; right:-10px; top:58%; transform:translateY(-35%); height:310px; width:auto; object-fit:contain; opacity:0.10; pointer-events:none; }
-/* Logo top-left — absolute so it doesn't push text */
-.logo-area { position:absolute; top:22px; left:60px; display:flex; align-items:center; gap:0; }
-.logo-img { height:250px; width:auto; object-fit:contain; display:block; }
-
-/* Name block */
-.name-divider { width:100%; height:1px; background:linear-gradient(90deg, #B8960C66, #B8960C22, transparent); margin-bottom:14px; }
+.logo-area { position:absolute; top:22px; left:60px; }
+.logo-img { height:250px; width:auto; object-fit:contain; display:block; transform:translate(-20%,-25%); }
+.name-divider { width:100%; height:1px; background:linear-gradient(90deg,#B8960C66,#B8960C22,transparent); margin-bottom:14px; }
 .name { font-family:Georgia,'Times New Roman',serif; font-size:34px; font-weight:400; color:#1a1208; letter-spacing:0.01em; line-height:1.1; margin-bottom:8px; }
-.role-line { display:flex; align-items:center; gap:10px; }
 .role { font-family:'Helvetica Neue',Arial,sans-serif; font-size:10px; color:#8B6914; letter-spacing:0.22em; font-weight:600; }
-.role-dot { color:#B8960C; opacity:0.7; font-size:14px; line-height:1; }
-
-/* Contacts */
-.contact-area { display:flex; flex-direction:column; gap:5px; }
-.crow { display:flex; align-items:center; gap:10px; font-family:'Helvetica Neue',Arial,sans-serif; font-size:11px; color:#6a5a3a; }
+.contacts { display:flex; flex-direction:column; gap:5px; }
+.crow { display:flex; align-items:center; gap:10px; font-size:11px; color:#6a5a3a; }
 .cred { color:#AC1F25; }
 .cgold { color:#8B6914; }
 .cdot { width:4px; height:4px; border-radius:50%; background:#B8960C; flex-shrink:0; opacity:0.6; }
 .clabel { color:#8B6914; font-size:9px; letter-spacing:0.14em; font-weight:700; min-width:24px; }
+.tif { color:#B8960C; font-size:10px; letter-spacing:0.05em; }
 
-/* Back */
-.back-inner { position:absolute; inset:0; }
-.back-logo { position:absolute; top:40%; left:50%; transform:translate(-50%, -55%); }
-.back-text { position:absolute; bottom:85px; left:0; right:0; display:flex; flex-direction:column; align-items:center; gap:14px; }
-.back-divider { width:220px; height:1px; background:linear-gradient(90deg, transparent, #B8960C66, transparent); }
-.back-divider-thin { width:160px; height:0.5px; background:linear-gradient(90deg, transparent, #B8960C33, transparent); }
-.back-claims { display:flex; gap:24px; align-items:center; }
-.back-claim { font-family:'Helvetica Neue',Arial,sans-serif; font-size:8.5px; color:#B8960C; letter-spacing:0.22em; font-weight:500; }
-.back-tagline { font-family:Georgia,serif; font-size:9px; color:#A7A9AC; letter-spacing:0.18em; }
+/* BACK */
+.back-inner { position:absolute; inset:0; display:flex; align-items:center; justify-content:space-between; padding:36px 52px; }
+.back-left { display:flex; flex-direction:column; justify-content:space-between; height:100%; }
+.back-divider { width:180px; height:1px; background:linear-gradient(90deg,#B8960C66,transparent); }
+.back-divider-thin { width:130px; height:0.5px; background:linear-gradient(90deg,#B8960C33,transparent); }
+.back-claims { display:flex; gap:14px; align-items:center; }
+.back-claim { font-family:'Helvetica Neue',Arial,sans-serif; font-size:7.5px; color:#B8960C; letter-spacing:0.2em; font-weight:500; }
+.back-tagline { font-family:Georgia,serif; font-size:8.5px; color:#A7A9AC; letter-spacing:0.16em; }
+.back-right { display:flex; flex-direction:column; align-items:center; gap:8px; flex-shrink:0; }
+.qr-box { width:148px; height:148px; background:#fff; border:1px solid #f0e8d8; border-radius:8px; box-shadow:0 2px 8px rgba(172,31,37,0.08); padding:6px; display:flex; align-items:center; justify-content:center; }
+.qr-label { font-family:'Helvetica Neue',Arial,sans-serif; font-size:8px; color:#8B6914; letter-spacing:0.16em; text-align:center; }
+.scan-line { font-family:Georgia,serif; font-size:8px; color:#A7A9AC; letter-spacing:0.08em; font-style:italic; }
 </style>
+</head>
+<body>
 
-<div class="page">
-
-  <div class="card-wrap">
-    <div class="card-label">— front —</div>
-    <div class="card">
-      <div class="red-line"></div>
-      <div class="gold-line"></div>
-      <div class="left-accent"></div>
-      <div class="left-accent-gold"></div>
-
-      <!-- Logo as large background watermark
-      <img class="logo-bg"
-           src="somaLOGO.png"
-           onerror="this.style.display='none';"
-           alt=""/> -->
-      <div class="front-inner">
-
-        <!-- Logo small top-left -->
-        <div class="logo-area">
-          <img class="logo-img"
-               src="somaLOGO.png"
-               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-               alt="SOMA MEAT CO"
-               style="transform: translate(-20%, -25%);"/>
-          <!-- Fallback placeholder shown only in preview -->
-          <div style="display:none; align-items:center; gap:10px;">
-            <svg width="32" height="32" viewBox="0 0 80 80" fill="none">
-              <path d="M40 8 C22 8 10 22 10 38 C10 56 22 70 40 72 C58 70 70 56 70 38 C70 22 58 8 40 8Z" fill="#AC1F25" stroke="#3C2415" stroke-width="3"/>
-              <path d="M33 28 C33 28 46 26 47 33 C48 38 35 40 35 40 C35 40 48 42 47 49 C46 54 33 52 33 52" stroke="white" stroke-width="3.5" stroke-linecap="round" fill="none"/>
-            </svg>
-            <div style="font-family:Georgia,serif; font-size:13px; font-weight:700; color:#3C2415; letter-spacing:0.08em;">SOMA MEAT CO</div>
-          </div>
-        </div>
-
-        <div style="transform: translateY(-30%);">
-          <div class="name-divider"></div>
-          <div class="name">Ana Laura Solórzano</div>
-          <div class="role-line">
-            <span class="role">CEO</span>
-          </div>
-        </div>
-
-        <div class="contact-area">
-          <div class="crow"><span class="cdot"></span><span class="clabel">WA</span><span style="color:#3a3020;">+52 56 1412-6327</span></div>
-          <div class="crow"><span class="cdot"></span><span class="clabel">Cel</span><span style="color:#3a3020;">+52 55 5105-8789</span></div>
-          <div class="crow"><span class="cdot"></span><span class="clabel">Tel</span><span style="color:#3a3020;">+52 593 127-2015</span></div>
-          <div class="crow"><span class="cdot"></span><span class="cred">analaura@somameat.com</span></div>
-          <div class="crow"><span class="cdot"></span><span class="cgold">somameat.com</span></div>
-          <div class="crow"><span class="cdot"></span>San Juan Teoloyucán, Mexico &nbsp;·&nbsp; <span style="color:#B8960C; font-size:10.5px; letter-spacing:0.05em;">TIF Certified</span></div>
-        </div>
-
+<div>
+  <p class="label">— front —</p>
+  <div class="card">
+    <div class="red-line"></div>
+    <div class="gold-line"></div>
+    <div class="left-accent"></div>
+    <div class="left-accent-gold"></div>
+    <div class="logo-area">
+      <img class="logo-img" src="somaLOGO.png" alt="SOMA MEAT CO"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+      <div style="display:none;font-family:Georgia,serif;font-size:15px;font-weight:700;color:#3C2415;letter-spacing:0.08em;">SOMA MEAT CO</div>
+    </div>
+    <div class="front-inner">
+      <div style="transform:translateY(-30%);">
+        <div class="name-divider"></div>
+        <div class="name">Ana Laura Solórzano</div>
+        <div class="role">FOUNDER &nbsp;·&nbsp; OWNER</div>
+      </div>
+      <div class="contacts">
+        <div class="crow"><span class="cdot"></span><span class="clabel">WA</span><span>+52 56 1412-6327</span></div>
+        <div class="crow"><span class="cdot"></span><span class="clabel">Cel</span><span>+52 55 5105-8789</span></div>
+        <div class="crow"><span class="cdot"></span><span class="clabel">Tel</span><span>+52 593 127-2015</span></div>
+        <div class="crow"><span class="cdot"></span><span class="cred">analaura@somameat.com</span></div>
+        <div class="crow"><span class="cdot"></span><span class="cgold">somameat.com</span></div>
+        <div class="crow"><span class="cdot"></span>San Juan Teoloyucán, Mexico &nbsp;·&nbsp;<span class="tif">&nbsp;TIF Certified</span></div>
       </div>
     </div>
   </div>
+</div>
 
-  <div class="sep"></div>
+<div class="sep"></div>
 
-  <div class="card-wrap">
-    <div class="card-label">— back —</div>
-    <div class="card">
-      <div class="red-line"></div>
-      <div class="gold-line"></div>
+<div>
+  <p class="label">— back —</p>
+  <div class="card">
+    <div class="red-line"></div>
+    <div class="gold-line"></div>
+    <div class="back-inner">
 
-      <div class="back-inner">
-
-        <div class="back-logo">
-          <img src="somaLOGO.png"
-               style="height:350px; width:auto; object-fit:contain; display:block;"
-               onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
-               alt="SOMA MEAT CO"/>
-          <div style="display:none; text-align:center;">
-            <svg width="60" height="60" viewBox="0 0 80 80" fill="none">
-              <path d="M40 8 C22 8 10 22 10 38 C10 56 22 70 40 72 C58 70 70 56 70 38 C70 22 58 8 40 8Z" fill="#AC1F25" stroke="#3C2415" stroke-width="3"/>
-              <path d="M33 28 C33 28 46 26 47 33 C48 38 35 40 35 40 C35 40 48 42 47 49 C46 54 33 52 33 52" stroke="white" stroke-width="3.5" stroke-linecap="round" fill="none"/>
-            </svg>
-            <div style="font-family:Georgia,serif; font-size:18px; font-weight:700; color:#3C2415; letter-spacing:0.1em; margin-top:6px;">SOMA MEAT CO</div>
-          </div>
+      <div class="back-left">
+        <div>
+          <img src="somaLOGO.png" style="height:72px;width:auto;object-fit:contain;"
+               alt="SOMA MEAT CO"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+          <div style="display:none;font-family:Georgia,serif;font-size:16px;font-weight:700;color:#3C2415;letter-spacing:0.1em;">SOMA MEAT CO</div>
         </div>
-
-        <div class="back-text">
+        <div style="display:flex;flex-direction:column;gap:10px;">
           <div class="back-divider"></div>
           <div class="back-claims">
             <span class="back-claim">QUALITY</span>
-            <span style="color:#B8960C; font-size:12px; opacity:0.4;">·</span>
+            <span style="color:#B8960C;opacity:0.4;font-size:10px;">·</span>
             <span class="back-claim">TRACEABILITY</span>
-            <span style="color:#B8960C; font-size:12px; opacity:0.4;">·</span>
+            <span style="color:#B8960C;opacity:0.4;font-size:10px;">·</span>
             <span class="back-claim">TRUST</span>
           </div>
           <div class="back-divider-thin"></div>
           <div class="back-tagline">TIF CERTIFIED · MADE IN MEXICO</div>
         </div>
-
       </div>
+
+      <div class="back-right">
+        <div class="qr-box">
+          <!-- QR SVG EMBEBIDO -->
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="136px" height="136px" viewBox="0 0 1078 1078">
+          <rect x="0" y="0" width="1078" height="1078" fill="rgb(255,255,255)"/><g transform="translate(28,28)"><g transform="translate(112,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(126,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(154,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(168,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(224,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(252,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(266,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(280,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(294,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(308,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(322,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(336,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(350,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(364,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(378,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(392,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(420,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(448,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(490,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(532,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(560,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(574,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(588,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(602,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(630,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(672,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(686,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(700,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(714,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(728,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(770,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(784,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(812,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(868,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(896,0) scale(0.14,0.14)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(0,0) scale(0.98,0.98)"><g style="fill:rgb(172,31,37)"><g><rect x="15" y="15" style="fill:none" width="70" height="70"/><path d="M85,0H15H0v15v70v15h15h70h15V85V15V0H85z M85,85H15V15h70V85z"/></g></g></g><g transform="translate(924,0) scale(0.98,0.98)"><g style="fill:rgb(172,31,37)"><g><rect x="15" y="15" style="fill:none" width="70" height="70"/><path d="M85,0H15H0v15v70v15h15h70h15V85V15V0H85z M85,85H15V15h70V85z"/></g></g></g><g transform="translate(0,924) scale(0.98,0.98)"><g style="fill:rgb(172,31,37)"><g><rect x="15" y="15" style="fill:none" width="70" height="70"/><path d="M85,0H15H0v15v70v15h15h70h15V85V15V0H85z M85,85H15V15h70V85z"/></g></g></g><g transform="translate(28,28) scale(0.42,0.42)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(952,28) scale(0.42,0.42)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g><g transform="translate(28,952) scale(0.42,0.42)"><g style="fill:rgb(172,31,37)"><rect width="100" height="100"/></g></g></g>
+          </svg>
+        </div>
+        <div class="qr-label">SCAN TO CONNECT</div>
+        <div class="scan-line">vCard · Ana Laura Solórzano</div>
+      </div>
+
     </div>
   </div>
-
 </div>
+
+</body>
+</html>
